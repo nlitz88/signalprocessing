@@ -23,22 +23,55 @@ def unit_imp(axis, d):
             res_sig[n] = 1
     return res_sig
 
-# Define the main function that I am plotting y[n].
-def y_n(n, d):
-    sig = (1/3)*y_n(n, -1)
+# Unit step functional value: This just returns the functional value of a unit step
+# signal at a sample n. Time shifts should be applied directly to n.
+def unit_step_val(n):
+    if n < 0:
+        return 0
+    else:
+        return 1
+
+# Similarly, a unit impulse signal value function. Returns functional value of discrete
+# time delta signal at sample number n.
+def unit_imp_val(n):
+    if n != 0:
+        return 0
+    else:
+        return 1
+
+# Define the main function that I am plotting y[n]. This function calculates the functional
+# value of the signal y[n] for every n it is provided. It returns the value of y at n.
+def y_n(n):
+    # Initial conditions for y
+    if n == -1 or n == -2:
+        return 2
+    # Otherwise, return the value of y according to the formula.
+    return (1/3)*y_n(n-1) - (1/2)*y_n(n-2) + unit_imp_val(n) + unit_step_val(n-50)
 
 # main section. Define time range with upper and lower limits.
 LL = 0
 UL = 100
 # Creates np.array with values 0, to 100, with step 1. This serves as our discrete time axis.
-n = np.arange(LL, UL+1, 1)
+n_axis = np.arange(LL, UL+1, 1)
+print(n_axis)
+
+y = np.zeros(len(n_axis))
+# Now, we'll generate the signal y[n] as a parallel numpy array.
+for n in n_axis:
+    y[n] = y_n(n)
+# Then, plot each y value at the corresponding n value from n_axis.
+plt.stem(n_axis, y)
+# Finally, show the plot.
+plt.show()
 
 # Now, generate a basic unit step signal.
-unit = unit_step(n, 4)
-
+# unit = unit_step(n, 4)
 # Then, plot using matplotlib.
 # The stem function creates a stem plot. Draws lines perpendicular to a baseline
 # at each location, locks.
-plt.stem(n, unit)
+# plt.stem(n, unit)
 # So, we're plotting the nth value of unit at the nth loc.
+
+
+
 
