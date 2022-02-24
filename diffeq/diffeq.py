@@ -60,6 +60,12 @@ for n in n_axis:
     y[n] = y_n(n, y)
 # Then, plot each y value at the corresponding n value from n_axis.
 plt.stem(n_axis, y)
+# Configure the plot.
+plt.xlabel("n")
+plt.ylabel("y[n]")
+plt.title("#10 - Recursively Solving Given Difference Eq")
+# plt.xticks(n)
+plt.yticks(np.linspace(0.0, 2.0, 5))
 # Finally, show the plot.
 plt.show()
 
