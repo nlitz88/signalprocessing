@@ -41,24 +41,23 @@ def unit_imp_val(n):
 
 # Define the main function that I am plotting y[n]. This function calculates the functional
 # value of the signal y[n] for every n it is provided. It returns the value of y at n.
-def y_n(n):
+def y_n(n, y_arr):
     # Initial conditions for y
     if n == -1 or n == -2:
         return 2
     # Otherwise, return the value of y according to the formula.
-    return (1/3)*y_n(n-1) - (1/2)*y_n(n-2) + unit_imp_val(n) + unit_step_val(n-50)
+    return (1/3)*y_arr[n-1] - (1/2)*y_arr[n-2] + unit_imp_val(n) + unit_step_val(n-50)
 
 # main section. Define time range with upper and lower limits.
 LL = 0
 UL = 100
 # Creates np.array with values 0, to 100, with step 1. This serves as our discrete time axis.
 n_axis = np.arange(LL, UL+1, 1)
-print(n_axis)
 
 y = np.zeros(len(n_axis))
 # Now, we'll generate the signal y[n] as a parallel numpy array.
 for n in n_axis:
-    y[n] = y_n(n)
+    y[n] = y_n(n, y)
 # Then, plot each y value at the corresponding n value from n_axis.
 plt.stem(n_axis, y)
 # Finally, show the plot.
@@ -71,7 +70,3 @@ plt.show()
 # at each location, locks.
 # plt.stem(n, unit)
 # So, we're plotting the nth value of unit at the nth loc.
-
-
-
-
