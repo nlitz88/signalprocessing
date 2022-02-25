@@ -42,9 +42,11 @@ def unit_imp_val(n):
 # Define the main function that I am plotting y[n]. This function calculates the functional
 # value of the signal y[n] for every n it is provided. It returns the value of y at n.
 def y_n(n, y_arr):
-    # Initial conditions for y
-    if n == -1 or n == -2:
-        return 2
+    # Handle initial conditions for y. There's a faster, more explicit way of doing this, though.
+    if n == 0:
+        return (1/3)*2 - (1/2)*2 + unit_imp_val(n) + unit_step_val(n-50)
+    elif n == 1:
+        return (1/3)*y_arr[n-1] - (1/2)*2 + unit_imp_val(n) + unit_step_val(n-50)
     # Otherwise, return the value of y according to the formula.
     return (1/3)*y_arr[n-1] - (1/2)*y_arr[n-2] + unit_imp_val(n) + unit_step_val(n-50)
 
@@ -64,8 +66,8 @@ plt.stem(n_axis, y)
 plt.xlabel("n")
 plt.ylabel("y[n]")
 plt.title("#10 - Recursively Solving Given Difference Eq")
-# plt.xticks(n)
-plt.yticks(np.linspace(0.0, 2.0, 5))
+plt.xticks(np.arange(0, 101, 10))
+plt.yticks(np.linspace(-1.5, 1.5, 7))
 # Finally, show the plot.
 plt.show()
 
