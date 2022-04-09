@@ -22,4 +22,5 @@ n = 100
 
 # For HW9, #5.24:
 result = bin_cdf(n,p,0,19)
-print(result)
+print(f'The P(Y <= 19) == {result}')
+print(f'The P(Y >= 20 Therefore == 1 - {result} == {1.0-result}')
